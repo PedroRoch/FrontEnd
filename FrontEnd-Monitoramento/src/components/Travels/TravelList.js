@@ -1,6 +1,6 @@
 // src/components/TravelList.js
 import React, { useEffect, useState } from 'react';
-import { getTravels, deleteTravel } from '../services/api';
+import { getTravels, deleteTravel } from '../../services/api';
 import { Button, List, ListItem, ListItemText, Typography, Grid } from '@mui/material';
 import io from 'socket.io-client';
 

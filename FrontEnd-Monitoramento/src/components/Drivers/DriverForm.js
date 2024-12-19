@@ -1,6 +1,6 @@
-// src/components/DriverForm.js
+// src/components/Drivers/DriverForm.js
 import React, { useState } from 'react';
-import { createDriver, updateDriver } from '../services/api';
+import { createDriver, updateDriver } from '../../services/api';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material';
 
 const DriverForm = ({ open, handleClose, driver }) => {
@@ -17,6 +17,16 @@ const DriverForm = ({ open, handleClose, driver }) => {
     handleClose();
   };
 
+  const handleCpfChange = (event) => {
+    const value = event.target.value.replace(/\D/g, '').slice(0, 11);
+    setCpf(value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'));
+  };
+
+  const handleCnhChange = (event) => {
+    const value = event.target.value.replace(/\D/g, '').slice(0, 11);
+    setCnh(value);
+  };
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>{driver ? 'Editar Motorista' : 'Cadastrar Motorista'}</DialogTitle>
@@ -26,10 +36,10 @@ const DriverForm = ({ open, handleClose, driver }) => {
             <TextField label="Nome" value={name} onChange={(e) => setName(e.target.value)} fullWidth />
           </Grid>
           <Grid item xs={12}>
-            <TextField label="CPF" value={cpf} onChange={(e) => setCpf(e.target.value)} fullWidth />
+            <TextField label="CPF" value={cpf} onChange={handleCpfChange} fullWidth />
           </Grid>
           <Grid item xs={12}>
-            <TextField label="CNH" value={cnh} onChange={(e) => setCnh(e.target.value)} fullWidth />
+            <TextField label="CNH" value={cnh} onChange={handleCnhChange} fullWidth />
           </Grid>
         </Grid>
       </DialogContent>
