@@ -1,8 +1,6 @@
 // src/App.js
-
 import React, { useState } from 'react';
-import { Container, Button, ThemeProvider, createTheme, CssBaseline, Typography, Box, Tabs, Tab } from '@mui/material';
-// Importando os componentes do Material-UI Lab para abas
+import { Container, Button, ThemeProvider, createTheme, CssBaseline, Typography, Box, Tabs, Tab, AppBar, Toolbar } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import VehicleList from './components/Vehicles/VehicleList';
 import VehicleForm from './components/Vehicles/VehicleForm';
@@ -11,7 +9,6 @@ import DriverForm from './components/Drivers/DriverForm';
 import TravelList from './components/Travels/TravelList';
 import TravelForm from './components/Travels/TravelForm';
 
-// Criação de um tema personalizado para a aplicação
 const theme = createTheme({
   palette: {
     primary: {
@@ -20,16 +17,19 @@ const theme = createTheme({
     secondary: {
       main: '#d32f2f',
     },
+    background: {
+      default: '#f5f5f5',
+    },
   },
   typography: {
     h4: {
-      margin: '16px 0',
+      margin: '20px 0',
+      fontWeight: 'bold',
     },
   },
 });
 
 function App() {
-  // Estado para controle da aba selecionada
   const [value, setValue] = useState('1');
   const [openVehicleForm, setOpenVehicleForm] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
@@ -40,12 +40,10 @@ function App() {
   const [openTravelForm, setOpenTravelForm] = useState(false);
   const [selectedTravel, setSelectedTravel] = useState(null);
 
-  // Função para mudança de aba
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  // Funções para abrir os formulários
   const handleOpenVehicleForm = (vehicle = null) => {
     setSelectedVehicle(vehicle);
     setOpenVehicleForm(true);
@@ -61,7 +59,6 @@ function App() {
     setOpenTravelForm(true);
   };
 
-  // Funções para fechar os formulários
   const handleCloseVehicleForm = () => setOpenVehicleForm(false);
   const handleCloseDriverForm = () => setOpenDriverForm(false);
   const handleCloseTravelForm = () => setOpenTravelForm(false);
@@ -69,18 +66,22 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container>
-        <Typography variant="h4" component="div">Gestão de Veículos, Motoristas e Viagens</Typography>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+            Gestão de Veículos, Motoristas e Viagens
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Container sx={{ mt: 4 }}>
         <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            {/* Lista de Abas */}
+          <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
             <TabList onChange={handleChange} aria-label="tabs">
               <Tab label="Motoristas" value="1" />
               <Tab label="Veículos" value="2" />
               <Tab label="Viagens" value="3" />
             </TabList>
           </Box>
-          {/* Painel de Abas */}
           <TabPanel value="1">
             <Button variant="contained" color="primary" onClick={() => handleOpenDriverForm()}>
               Cadastrar Motorista

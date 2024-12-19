@@ -1,6 +1,7 @@
+// src/components/Drivers/DriverList.js
 import React, { useEffect, useState } from 'react';
 import { getDrivers, deleteDriver } from '../../services/api';
-import { Button, List, ListItem, ListItemText, Typography, Grid } from '@mui/material';
+import { Button, Grid, Typography, Card, CardContent, CardActions, Container, Box } from '@mui/material';
 import io from 'socket.io-client';
 
 const DriverList = ({ onEdit }) => {
@@ -28,26 +29,28 @@ const DriverList = ({ onEdit }) => {
   };
 
   return (
-    <div>
-      <Typography variant="h4">Motoristas</Typography>
-      <List>
+    <Container sx={{ py: 2 }}>
+      <Box sx={{ textAlign: 'center', mb: 3 }}>
+        <Typography variant="h4" gutterBottom>Motoristas</Typography>
+      </Box>
+      <Grid container spacing={4} justifyContent="center">
         {drivers.map(driver => (
-          <ListItem key={driver.id}>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={8}>
-                <ListItemText primary={`${driver.name} - CPF: ${driver.cpf} - CNH: ${driver.cnh}`} />
-              </Grid>
-              <Grid item xs={2}>
-                <Button variant="contained" color="primary" onClick={() => onEdit(driver)}>Editar</Button>
-              </Grid>
-              <Grid item xs={2}>
-                <Button variant="contained" color="secondary" onClick={() => handleDelete(driver.id)}>Excluir</Button>
-              </Grid>
-            </Grid>
-          </ListItem>
+          <Grid item key={driver.id} xs={12} sm={6} md={4} lg={3}>
+            <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Typography variant="h6">{driver.name}</Typography>
+                <Typography color="textSecondary">CPF: {driver.cpf}</Typography>
+                <Typography color="textSecondary">CNH: {driver.cnh}</Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" color="primary" onClick={() => onEdit(driver)}>Editar</Button>
+                <Button size="small" color="secondary" onClick={() => handleDelete(driver.id)}>Excluir</Button>
+              </CardActions>
+            </Card>
+          </Grid>
         ))}
-      </List>
-    </div>
+      </Grid>
+    </Container>
   );
 };
 

@@ -1,6 +1,7 @@
+// src/components/Vehicles/VehicleList.js
 import React, { useEffect, useState } from 'react';
 import { getVehicles, deleteVehicle } from '../../services/api';
-import { Button, List, ListItem, ListItemText, Typography, Grid } from '@mui/material';
+import { Button, Grid, Typography, Card, CardContent, CardActions, Container, Box } from '@mui/material';
 import io from 'socket.io-client';
 
 const VehicleList = ({ onEdit }) => {
@@ -28,26 +29,29 @@ const VehicleList = ({ onEdit }) => {
   };
 
   return (
-    <div>
-      <Typography variant="h4">Veículos</Typography>
-      <List>
+    <Container sx={{ py: 2 }}>
+      <Box sx={{ textAlign: 'center', mb: 3 }}>
+        <Typography variant="h4" gutterBottom>Veículos</Typography>
+      </Box>
+      <Box sx={{ textAlign: 'center', mb: 3 }}>
+      </Box>
+      <Grid container spacing={4} justifyContent="center">
         {vehicles.map(vehicle => (
-          <ListItem key={vehicle.id}>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={8}>
-                <ListItemText primary={`${vehicle.type} - ${vehicle.plate}`} />
-              </Grid>
-              <Grid item xs={2}>
-                <Button variant="contained" color="primary" onClick={() => onEdit(vehicle)}>Editar</Button>
-              </Grid>
-              <Grid item xs={2}>
-                <Button variant="contained" color="secondary" onClick={() => handleDelete(vehicle.id)}>Excluir</Button>
-              </Grid>
-            </Grid>
-          </ListItem>
+          <Grid item key={vehicle.id} xs={12} sm={6} md={4} lg={3}>
+            <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Typography variant="h6">{vehicle.type.charAt(0).toUpperCase() + vehicle.type.slice(1)}</Typography>
+                <Typography color="textSecondary">Placa: {vehicle.plate}</Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" color="primary" onClick={() => onEdit(vehicle)}>Editar</Button>
+                <Button size="small" color="secondary" onClick={() => handleDelete(vehicle.id)}>Excluir</Button>
+              </CardActions>
+            </Card>
+          </Grid>
         ))}
-      </List>
-    </div>
+      </Grid>
+    </Container>
   );
 };
 
