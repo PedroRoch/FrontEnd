@@ -41,6 +41,7 @@ const DriverList = ({ onEdit }) => {
                 <Typography variant="h6">{driver.name}</Typography>
                 <Typography color="textSecondary">CPF: {driver.cpf}</Typography>
                 <Typography color="textSecondary">CNH: {driver.cnh}</Typography>
+                <Typography color="textSecondary">Status: {driver.status === 'driving' ? 'Dirigindo' : 'Parado'}</Typography>
               </CardContent>
               <CardActions>
                 <Button size="small" color="primary" onClick={() => onEdit(driver)}>Editar</Button>

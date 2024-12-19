@@ -33,8 +33,6 @@ const VehicleList = ({ onEdit }) => {
       <Box sx={{ textAlign: 'center', mb: 3 }}>
         <Typography variant="h4" gutterBottom>Veículos</Typography>
       </Box>
-      <Box sx={{ textAlign: 'center', mb: 3 }}>
-      </Box>
       <Grid container spacing={4} justifyContent="center">
         {vehicles.map(vehicle => (
           <Grid item key={vehicle.id} xs={12} sm={6} md={4} lg={3}>
@@ -42,6 +40,10 @@ const VehicleList = ({ onEdit }) => {
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="h6">{vehicle.type.charAt(0).toUpperCase() + vehicle.type.slice(1)}</Typography>
                 <Typography color="textSecondary">Placa: {vehicle.plate}</Typography>
+                <Typography color="textSecondary">Latitude: {vehicle.lat}</Typography>
+                <Typography color="textSecondary">Longitude: {vehicle.lng}</Typography>
+                <Typography color="textSecondary">Velocidade: {vehicle.speed} km/h</Typography>
+                <Typography color="textSecondary">Status: {vehicle.status === 'moving' ? 'Em movimento' : 'Parado'}</Typography>
               </CardContent>
               <CardActions>
                 <Button size="small" color="primary" onClick={() => onEdit(vehicle)}>Editar</Button>

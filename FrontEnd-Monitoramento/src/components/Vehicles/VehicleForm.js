@@ -6,14 +6,22 @@ import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, G
 const VehicleForm = ({ open, handleClose, vehicle }) => {
   const [type, setType] = useState(vehicle ? vehicle.type : '');
   const [plate, setPlate] = useState(vehicle ? vehicle.plate : '');
+  const [lat, setLat] = useState(vehicle ? vehicle.lat : '');
+  const [lng, setLng] = useState(vehicle ? vehicle.lng : '');
+  const [speed, setSpeed] = useState(vehicle ? vehicle.speed : '');
+  const [status, setStatus] = useState(vehicle ? vehicle.status : '');
 
   const handleSubmit = async () => {
-    if (vehicle) {
-      await updateVehicle(vehicle.id, { type, plate });
-    } else {
-      await createVehicle({ type, plate });
+    try {
+      if (vehicle) {
+        await updateVehicle(vehicle.id, { type, plate, lat, lng, speed, status });
+      } else {
+        await createVehicle({ type, plate, lat, lng, speed, status });
+      }
+      handleClose();
+    } catch (error) {
+      console.error("Erro ao salvar veículo:", error);
     }
-    handleClose();
   };
 
   const handlePlateChange = (event) => {
@@ -41,6 +49,27 @@ const VehicleForm = ({ open, handleClose, vehicle }) => {
           </Grid>
           <Grid item xs={12}>
             <TextField label="Placa" value={plate} onChange={handlePlateChange} fullWidth />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField label="Latitude" value={lat} onChange={(e) => setLat(e.target.value)} fullWidth />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField label="Longitude" value={lng} onChange={(e) => setLng(e.target.value)} fullWidth />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField label="Velocidade" value={speed} onChange={(e) => setSpeed(e.target.value)} fullWidth />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              select
+              label="Status"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              fullWidth
+            >
+              <MenuItem value="stopped">Parado</MenuItem>
+              <MenuItem value="moving">Em movimento</MenuItem>
+            </TextField>
           </Grid>
         </Grid>
       </DialogContent>

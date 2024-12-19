@@ -35,12 +35,16 @@ const TravelForm = ({ open, handleClose, travel }) => {
     }
     setError('');
 
-    if (travel) {
-      await updateTravel(travel.id, { driverId, vehicleId, status, start, end });
-    } else {
-      await createTravel({ driverId, vehicleId, status, start, end });
+    try {
+      if (travel) {
+        await updateTravel(travel.id, { driverId, vehicleId, status, start, end });
+      } else {
+        await createTravel({ driverId, vehicleId, status, start, end });
+      }
+      handleClose();
+    } catch (error) {
+      console.error("Erro ao salvar viagem:", error);
     }
-    handleClose();
   };
 
   return (

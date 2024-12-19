@@ -1,20 +1,25 @@
 // src/components/Drivers/DriverForm.js
 import React, { useState } from 'react';
 import { createDriver, updateDriver } from '../../services/api';
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material';
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Grid, MenuItem } from '@mui/material';
 
 const DriverForm = ({ open, handleClose, driver }) => {
   const [name, setName] = useState(driver ? driver.name : '');
   const [cpf, setCpf] = useState(driver ? driver.cpf : '');
   const [cnh, setCnh] = useState(driver ? driver.cnh : '');
+  const [status, setStatus] = useState(driver ? driver.status : '');
 
   const handleSubmit = async () => {
-    if (driver) {
-      await updateDriver(driver.id, { name, cpf, cnh });
-    } else {
-      await createDriver({ name, cpf, cnh });
+    try {
+      if (driver) {
+        await updateDriver(driver.id, { name, cpf, cnh, status });
+      } else {
+        await createDriver({ name, cpf, cnh, status });
+      }
+      handleClose();
+    } catch (error) {
+      console.error("Erro ao salvar motorista:", error);
     }
-    handleClose();
   };
 
   const handleCpfChange = (event) => {
@@ -40,6 +45,18 @@ const DriverForm = ({ open, handleClose, driver }) => {
           </Grid>
           <Grid item xs={12}>
             <TextField label="CNH" value={cnh} onChange={handleCnhChange} fullWidth />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              select
+              label="Status"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              fullWidth
+            >
+              <MenuItem value="driving">Dirigindo</MenuItem>
+              <MenuItem value="idle">Parado</MenuItem>
+            </TextField>
           </Grid>
         </Grid>
       </DialogContent>
