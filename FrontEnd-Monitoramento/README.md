@@ -1,70 +1,128 @@
-# Getting Started with Create React App
+# Gestão de Veículos, Motoristas e Viagens - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto é uma aplicação web para gerenciar veículos, motoristas e viagens. Ele permite a criação, atualização, exclusão e visualização de dados relacionados a veículos, motoristas e viagens, bem como a interação em tempo real via WebSocket.
+Desafio proposto por Motora-ai para seleção de um Processo Seletivo
 
-## Available Scripts
+## Tecnologias Utilizadas
 
-In the project directory, you can run:
+- **Frontend**: React, Material-UI, Socket.IO-client
 
-### `npm start`
+## Objetivos
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Utilizando a aplicação backend disponibilizada no repositório https://github.com/motora-ai/processo-seletivo-trainee, construa uma interface com os seguintes requisitos:
+ - Seja capaz de apresentar as informações de veículos, motoristas e viagens de forma organizada e intuitiva;
+ - Seja capaz de cadastrar novos veículos, motoristas e viagens;
+ - Seja capaz de modificar os veículos, motoristas e viagens existentes;
+ - Seja capaz de excluir veículos, motoristas e viagens.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+##Funcionalidades: 
 
-### `npm test`
+### Veículos
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Criação de Veículo:
+- Utiliza a função `createVehicle` para adicionar um novo veículo.
+- Exibe um formulário (`VehicleForm`) para inserir dados como tipo, placa, latitude, longitude, velocidade e status do veículo.
 
-### `npm run build`
+#### Edição de Veículo:
+- Utiliza a função `updateVehicle` para atualizar as informações de um veículo existente.
+- O formulário (`VehicleForm`) é preenchido com os dados do veículo selecionado para edição.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Visualização de Veículos:
+- Utiliza a função `getVehicles` para obter todos os veículos.
+- Os veículos são exibidos em uma lista (`VehicleList`), mostrando detalhes como tipo, placa, latitude, longitude, velocidade e status.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Remoção de Veículo:
+- Utiliza a função `deleteVehicle` para remover um veículo.
+- O usuário pode excluir um veículo diretamente da lista de veículos (`VehicleList`).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Motoristas
 
-### `npm run eject`
+#### Criação de Motorista:
+- Utiliza a função `createDriver` para adicionar um novo motorista.
+- Exibe um formulário (`DriverForm`) para inserir dados como nome, CPF, CNH e status do motorista.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### Edição de Motorista:
+- Utiliza a função `updateDriver` para atualizar as informações de um motorista existente.
+- O formulário (`DriverForm`) é preenchido com os dados do motorista selecionado para edição.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Visualização de Motoristas:
+- Utiliza a função `getDrivers` para obter todos os motoristas.
+- Os motoristas são exibidos em uma lista (`DriverList`), mostrando detalhes como nome, CPF, CNH e status.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### Remoção de Motorista:
+- Utiliza a função `deleteDriver` para remover um motorista.
+- O usuário pode excluir um motorista diretamente da lista de motoristas (`DriverList`).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Viagens
 
-## Learn More
+#### Criação de Viagem:
+- Utiliza a função `createTravel` para adicionar uma nova viagem.
+- Exibe um formulário (`TravelForm`) para inserir dados como ID do motorista, ID do veículo, status, data de início e data de fim.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Edição de Viagem:
+- Utiliza a função `updateTravel` para atualizar as informações de uma viagem existente.
+- O formulário (`TravelForm`) é preenchido com os dados da viagem selecionada para edição.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Visualização de Viagens:
+- Utiliza a função `getTravels` para obter todas as viagens.
+- As viagens são exibidas em uma lista (`TravelList`), mostrando detalhes como ID do motorista, ID do veículo, status, data de início e data de fim.
 
-### Code Splitting
+#### Remoção de Viagem:
+- Utiliza a função `deleteTravel` para remover uma viagem.
+- O usuário pode excluir uma viagem diretamente da lista de viagens (`TravelList`).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Estrutura do Código
 
-### Analyzing the Bundle Size
+### src/App.js
+- **ThemeProvider**: Provedor de tema para a aplicação, utilizando o tema personalizado do Material-UI.
+- **CssBaseline**: Fornece um baseline CSS global.
+- **AppBar e Toolbar**: Barra de navegação superior.
+- **Tabs**: Navegação entre as seções de Motoristas, Veículos e Viagens.
+- **Formulários**: Modal para criar e editar motoristas, veículos e viagens.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### src/services/api.js
+- **Funções de API**: Funções para realizar operações CRUD (Create, Read, Update, Delete) para veículos, motoristas e viagens.
 
-### Making a Progressive Web App
+### src/components/Vehicles/VehicleForm.js
+- **Formulário de Veículos**: Modal para criar e editar veículos. Inclui campos para tipo, placa, latitude, longitude, velocidade e status do veículo.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### src/components/Vehicles/VehicleList.js
+- **Lista de Veículos**: Exibe a lista de veículos. Inclui funcionalidades para editar e excluir veículos.
 
-### Advanced Configuration
+### src/components/Drivers/DriverForm.js
+- **Formulário de Motoristas**: Modal para criar e editar motoristas. Inclui campos para nome, CPF, CNH e status do motorista.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### src/components/Drivers/DriverList.js
+- **Lista de Motoristas**: Exibe a lista de motoristas. Inclui funcionalidades para editar e excluir motoristas.
 
-### Deployment
+### src/components/Travels/TravelForm.js
+- **Formulário de Viagens**: Modal para criar e editar viagens. Inclui campos para ID do motorista, ID do veículo, status, data de início e data de fim.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### src/components/Travels/TravelList.js
+- **Lista de Viagens**: Exibe a lista de viagens. Inclui funcionalidades para editar e excluir viagens.
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Instalação e Configuração
+
+### Requisitos
+
+- Node.js
+
+### Passos para Instalação
+
+1. **Clone o repositório do frontend**:
+   ```bash
+   git clone https://github.com/PedroRoch/FrontEnd/tree/main/FrontEnd-Monitoramento
+   cd FrontEnd-Monitoramento
+2. **Instale as Dependências**
+   ```bash
+   npm install
+   ```
+3. Iniciar o sistema
+   ```bash
+   npm start
+   ```
+Atenção: certifique-se que o Backend esteja inicializado para funcionar corretamente
+
+
+
