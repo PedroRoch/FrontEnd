@@ -1,28 +1,36 @@
 // src/components/Vehicles/VehicleList.js
+
+// Importações necessárias do React, API e Material-UI
 import React, { useEffect, useState } from 'react';
 import { getVehicles, deleteVehicle } from '../../services/api';
 import { Button, Grid, Typography, Card, CardContent, CardActions, Container, Box } from '@mui/material';
 import io from 'socket.io-client';
 
 const VehicleList = ({ onEdit }) => {
+  // Definindo estado local para armazenar a lista de veículos
   const [vehicles, setVehicles] = useState([]);
 
+  // Hook useEffect para buscar dados de veículos ao montar o componente
   useEffect(() => {
     fetchVehicles();
 
+    // Configuração do WebSocket para atualizações em tempo real
     const socket = io('http://localhost:3000/vehicles/ws');
     socket.on('vehicle-created', fetchVehicles);
     socket.on('vehicle-updated', fetchVehicles);
     socket.on('vehicle-deleted', fetchVehicles);
 
+    // Limpeza do WebSocket ao desmontar o componente
     return () => socket.disconnect();
   }, []);
 
+  // Função para buscar dados de veículos da API
   const fetchVehicles = async () => {
     const response = await getVehicles();
     setVehicles(response.data);
   };
 
+  // Função para lidar com a exclusão de um veículo
   const handleDelete = async (id) => {
     await deleteVehicle(id);
     fetchVehicles();
@@ -34,6 +42,7 @@ const VehicleList = ({ onEdit }) => {
         <Typography variant="h4" gutterBottom>Veículos</Typography>
       </Box>
       <Grid container spacing={4} justifyContent="center">
+        {/* Mapeando e exibindo a lista de veículos */}
         {vehicles.map(vehicle => (
           <Grid item key={vehicle.id} xs={12} sm={6} md={4} lg={3}>
             <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>

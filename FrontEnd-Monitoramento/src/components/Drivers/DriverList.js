@@ -1,28 +1,36 @@
 // src/components/Drivers/DriverList.js
+
+// Importações necessárias do React, API e Material-UI
 import React, { useEffect, useState } from 'react';
 import { getDrivers, deleteDriver } from '../../services/api';
 import { Button, Grid, Typography, Card, CardContent, CardActions, Container, Box } from '@mui/material';
 import io from 'socket.io-client';
 
 const DriverList = ({ onEdit }) => {
+  // Definindo estado local para armazenar a lista de motoristas
   const [drivers, setDrivers] = useState([]);
 
+  // Hook useEffect para buscar dados de motoristas ao montar o componente
   useEffect(() => {
     fetchDrivers();
 
+    // Configuração do WebSocket para atualizações em tempo real
     const socket = io('http://localhost:3000/drivers/ws');
     socket.on('driver-created', fetchDrivers);
     socket.on('driver-updated', fetchDrivers);
     socket.on('driver-deleted', fetchDrivers);
 
+    // Limpeza do WebSocket ao desmontar o componente
     return () => socket.disconnect();
   }, []);
 
+  // Função para buscar dados de motoristas da API
   const fetchDrivers = async () => {
     const response = await getDrivers();
     setDrivers(response.data);
   };
 
+  // Função para lidar com a exclusão de um motorista
   const handleDelete = async (id) => {
     await deleteDriver(id);
     fetchDrivers();
@@ -34,6 +42,7 @@ const DriverList = ({ onEdit }) => {
         <Typography variant="h4" gutterBottom>Motoristas</Typography>
       </Box>
       <Grid container spacing={4} justifyContent="center">
+        {/* Mapeando e exibindo a lista de motoristas */}
         {drivers.map(driver => (
           <Grid item key={driver.id} xs={12} sm={6} md={4} lg={3}>
             <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>

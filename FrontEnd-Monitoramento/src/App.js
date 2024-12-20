@@ -1,6 +1,8 @@
 // src/App.js
+
+// Importações necessárias do React, Material-UI e componentes personalizados
 import React, { useState } from 'react';
-import { Container, Button, ThemeProvider, createTheme, CssBaseline, Typography, Box, Tabs, Tab, AppBar, Toolbar } from '@mui/material';
+import { Container, ThemeProvider, createTheme, CssBaseline, Typography, Box, AppBar, Toolbar, Tabs, Tab, Button } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import VehicleList from './components/Vehicles/VehicleList';
 import VehicleForm from './components/Vehicles/VehicleForm';
@@ -9,6 +11,7 @@ import DriverForm from './components/Drivers/DriverForm';
 import TravelList from './components/Travels/TravelList';
 import TravelForm from './components/Travels/TravelForm';
 
+// Configuração do tema personalizado do Material-UI
 const theme = createTheme({
   palette: {
     primary: {
@@ -23,13 +26,17 @@ const theme = createTheme({
   },
   typography: {
     h4: {
-      margin: '20px 0',
+      margin: '16px 0',
+      fontWeight: 'bold',
+    },
+    h6: {
       fontWeight: 'bold',
     },
   },
 });
 
 function App() {
+  // Estados para gerenciar a aba selecionada e os formulários abertos
   const [value, setValue] = useState('1');
   const [openVehicleForm, setOpenVehicleForm] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
@@ -40,10 +47,12 @@ function App() {
   const [openTravelForm, setOpenTravelForm] = useState(false);
   const [selectedTravel, setSelectedTravel] = useState(null);
 
+  // Função para lidar com a mudança de aba
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  // Funções para abrir os formulários com os dados selecionados (se existirem)
   const handleOpenVehicleForm = (vehicle = null) => {
     setSelectedVehicle(vehicle);
     setOpenVehicleForm(true);
@@ -59,6 +68,7 @@ function App() {
     setOpenTravelForm(true);
   };
 
+  // Funções para fechar os formulários
   const handleCloseVehicleForm = () => setOpenVehicleForm(false);
   const handleCloseDriverForm = () => setOpenDriverForm(false);
   const handleCloseTravelForm = () => setOpenTravelForm(false);
@@ -68,7 +78,7 @@ function App() {
       <CssBaseline />
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Gestão de Veículos, Motoristas e Viagens
           </Typography>
         </Toolbar>
@@ -83,23 +93,17 @@ function App() {
             </TabList>
           </Box>
           <TabPanel value="1">
-            <Button variant="contained" color="primary" onClick={() => handleOpenDriverForm()}>
-              Cadastrar Motorista
-            </Button>
+            <Button variant="contained" color="primary" onClick={() => handleOpenDriverForm(null)}>Cadastrar Motorista</Button>
             <DriverList onEdit={handleOpenDriverForm} />
             <DriverForm open={openDriverForm} handleClose={handleCloseDriverForm} driver={selectedDriver} />
           </TabPanel>
           <TabPanel value="2">
-            <Button variant="contained" color="primary" onClick={() => handleOpenVehicleForm()}>
-              Cadastrar Veículo
-            </Button>
+            <Button variant="contained" color="primary" onClick={() => handleOpenVehicleForm(null)}>Cadastrar Veículo</Button>
             <VehicleList onEdit={handleOpenVehicleForm} />
             <VehicleForm open={openVehicleForm} handleClose={handleCloseVehicleForm} vehicle={selectedVehicle} />
           </TabPanel>
           <TabPanel value="3">
-            <Button variant="contained" color="primary" onClick={() => handleOpenTravelForm()}>
-              Cadastrar Viagem
-            </Button>
+            <Button variant="contained" color="primary" onClick={() => handleOpenTravelForm(null)}>Cadastrar Viagem</Button>
             <TravelList onEdit={handleOpenTravelForm} />
             <TravelForm open={openTravelForm} handleClose={handleCloseTravelForm} travel={selectedTravel} />
           </TabPanel>
